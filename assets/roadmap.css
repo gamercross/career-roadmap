@@ -53,6 +53,8 @@
 .r-two ul { display: grid; gap: 8px; }
 .r-two li { padding-left: 1.2em; text-indent: -1.2em; }
 .r-two li::before { content: "– "; color: var(--muted); }
+.r-two li.r-arrow { padding-left: 0; text-indent: 0; }
+.r-two li.r-arrow::before { content: none; }
 
 /* ── 한 줄 답: 물음은 작게, 답은 크게 ─────────────── */
 .r-body > .r-answer { margin-top: 96px; }

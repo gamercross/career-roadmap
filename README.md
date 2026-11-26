@@ -8,5 +8,7 @@ GitHub Pages: https://gamercross.github.io/career-roadmap/
 
 ## 구성
 
-- `index.html` — 로드맵 페이지 (목표설정 / 자기분석 / 진로계획 / 경험-역량 매핑 / 정보탐색 / 줄기와 2027 계획 / 다음 단계 / 데일리 로그)
+- `index.html` — 로드맵 페이지 (빌드업 / 목표설정 / 자기분석 / 진로계획 / 경험-역량 매핑 / 정보탐색 / 줄기와 2027 계획 / 근거 / 다음 단계 / 데일리 로그)
+- `assets/roadmap.css` · `assets/roadmap.js` — 로드맵에만 쓰는 꼴과 데일리 로그
+- 같이 쓰는 파일(포트폴리오 gamercross.github.io에서 그대로 옮김, 고치지 않음): `assets/tokens.css` · `site.css` · `site.js` · `partials/` · `favicon.svg` · `apple-touch-icon.png` · `_design/DESIGN.md` · `_design/PRODUCT.md`. 포트폴리오 쪽이 바뀌면 다시 옮긴다.
 - 데일리 로그는 이 사이트를 연 브라우저에만 저장된다 (localStorage).

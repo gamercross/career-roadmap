@@ -8,12 +8,6 @@
   var didEl = document.getElementById('log-did');
   if (!listEl || !formEl) return;
 
-  function esc(s){
-    return String(s || '').replace(/[&<>"']/g, function(c){
-      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
-    });
-  }
-
   function load(){
     try{
       var raw = localStorage.getItem(STORAGE_KEY);
@@ -28,21 +22,33 @@
     }catch(e){ return false; }
   }
 
+  // 글은 textContent로만 넣는다(innerHTML 없음)
+  function el(tag, cls, text){
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = String(text);
+    return n;
+  }
+
   function render(entries){
+    listEl.replaceChildren();
     if(!entries || !entries.length){
-      listEl.innerHTML = '<div class="log-empty">아직 기록이 없습니다. 위 폼에 오늘 한 일을 남겨보세요.</div>';
+      listEl.append(el('div', 'log-empty', '아직 기록이 없습니다. 위 폼에 오늘 한 일을 남겨보세요.'));
       return;
     }
-    listEl.innerHTML = '<div class="log-list">' + entries.map(function(e){
-      return '<div class="log-entry">'
-        + '<div class="log-date">' + esc(e.date) + '</div>'
-        + '<dl>'
-        + '<dt>한 일</dt><dd>' + esc(e.did) + '</dd>'
-        + (e.why ? '<dt>이유</dt><dd>' + esc(e.why) + '</dd>' : '')
-        + (e.blocker ? '<dt>막힌 점</dt><dd>' + esc(e.blocker) + '</dd>' : '')
-        + (e.next ? '<dt>다음</dt><dd>' + esc(e.next) + '</dd>' : '')
-        + '</dl></div>';
-    }).join('') + '</div>';
+    var list = el('div', 'log-list');
+    entries.forEach(function(e){
+      var box = el('div', 'log-entry');
+      box.append(el('div', 'log-date', e.date || ''));
+      var dl = el('dl');
+      [['한 일', e.did], ['이유', e.why], ['막힌 점', e.blocker], ['다음', e.next]].forEach(function(row, i){
+        if (i > 0 && !row[1]) return;
+        dl.append(el('dt', null, row[0]), el('dd', null, row[1] || ''));
+      });
+      box.append(dl);
+      list.append(box);
+    });
+    listEl.append(list);
   }
 
   render(load());
