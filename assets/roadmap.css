@@ -44,7 +44,11 @@
 .r-date { color: var(--faint); font-size: var(--t-s); font-variant-numeric: tabular-nums; }
 .r-title { font-size: var(--t-m); font-weight: 600; line-height: 1.4; letter-spacing: -0.01em; }
 .r-text { margin-top: 8px; max-width: 64ch; }
-.r-line .r-rel { text-align: right; }
+.r-line > li > div:not(.r-date) { display: contents; }
+.r-line .r-date { grid-column: 1; grid-row: 1 / span 2; align-self: start; padding-top: 6px; }
+.r-line .r-title { grid-column: 2; grid-row: 1; }
+.r-line .r-rel { grid-column: 3; grid-row: 1 / span 2; align-self: start; padding-top: 6px; text-align: right; }
+.r-line .r-text { grid-column: 2; grid-row: 2; margin-top: 4px; }
 
 /* ── 두 칸 글 (판 없이) ─────────────────────────── */
 .r-two { display: grid; grid-template-columns: 1fr 1fr; gap: 48px var(--gutter); }
@@ -143,7 +147,11 @@ button.go { background: none; color: var(--ink); padding: 0; }
   .r-goal { font-size: var(--t-b); }
   .r-toc { display: none; }
   .r-line > li { grid-template-columns: minmax(0, 1fr) auto; padding: 16px 0; }
-  .r-line > li > div:not(.r-date) { grid-column: 1 / -1; grid-row: 2; }
+  .r-line .r-date, .r-line .r-rel { grid-row: 1; padding-top: 0; align-self: baseline; }
+  .r-line .r-date { grid-column: 1; }
+  .r-line .r-rel { grid-column: 2; }
+  .r-line .r-title { grid-column: 1 / -1; grid-row: 2; }
+  .r-line .r-text { grid-column: 1 / -1; grid-row: 3; }
   .r-two, .r-row2, .r-proof, .r-answer { grid-template-columns: minmax(0, 1fr); }
   .r-years { grid-template-columns: minmax(0, 1fr); gap: 24px; }
   .r-years > li { display: grid; grid-template-columns: 4.4em minmax(0, 1fr); column-gap: 16px; align-items: baseline; }
