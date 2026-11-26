@@ -34,8 +34,11 @@
 .r-aw-group h4 { margin: 0; font-size: var(--t-s); font-weight: 500; color: var(--muted); }
 .r-aw li { display: grid; grid-template-columns: 9.5em minmax(0, 1fr); gap: 4px var(--gutter); padding: 10px 0; align-items: baseline; }
 .r-aw time { color: var(--faint); font-size: var(--t-s); font-variant-numeric: tabular-nums; }
-.r-aw-name { font-weight: 600; }
+.r-aw-w b { display: block; font-weight: 600; line-height: 1.4; }
+.r-aw-w > span { display: block; margin-top: 4px; text-wrap: pretty; }
 .r-aw-meta { grid-column: 2; color: var(--muted); font-size: var(--t-s); }
+.r-aw-meta a { color: var(--ink); text-underline-offset: .22em; text-decoration-color: color-mix(in srgb, var(--ink) 40%, transparent); }
+.r-aw-meta a:hover { text-decoration-color: var(--ink); }
 .r-fig figcaption { margin-top: 12px; font-size: var(--t-s); color: var(--muted); }
 .r-fig figcaption b { color: var(--ink); font-weight: 600; margin-right: 8px; }
 
