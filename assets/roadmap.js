@@ -1,4 +1,17 @@
-// 커리어 로드맵: 데일리 로그 (이 브라우저의 localStorage에만 저장한다)
+// 커리어 로드맵: 폰 차례 접기 · 데일리 로그 (이 브라우저의 localStorage에만 저장한다)
+
+// 차례: 넓은 화면에서는 늘 펼침, 폰(760px 이하)에서는 "차례" 한 줄로 접어 둔다. 스크립트가 없으면 펼친 채로 둔다.
+(function(){
+  var d = document.querySelector('.r-toc-d');
+  if (!d) return;
+  var mq = matchMedia('(max-width: 760px)');
+  var sync = function(){ d.open = !mq.matches; };
+  sync();
+  mq.addEventListener('change', sync);
+  // 폰에서 구역을 고르면 접는다
+  d.addEventListener('click', function(e){ if (mq.matches && e.target.closest('a')) d.open = false; });
+})();
+
 (function(){
   var STORAGE_KEY = 'career-roadmap-log';
   var listEl = document.getElementById('log-list');

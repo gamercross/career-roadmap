@@ -18,6 +18,17 @@
 .r-toc a { display: block; padding: 10px 0; text-decoration: none; }
 .r-toc b { font-weight: 600; line-height: 1.4; }
 .r-toc a:hover b { text-decoration: underline; }
+/* 폰에서만 "차례" 한 줄로 접는다(details · summary). 넓은 화면에서는 늘 펼쳐 두고 summary를 숨긴다(roadmap.js가 open을 맞춤) */
+.r-toc summary { display: none; }
+
+/* 연표 옆 작품 그림: 그 줄의 본문 아래, 같은 칸에 */
+.r-line .r-fig { grid-column: 2; grid-row: 3; margin-top: 16px; }
+.r-fig-poster .plate { max-width: 320px; }
+.r-fig figcaption { margin-top: 12px; font-size: var(--t-s); color: var(--muted); }
+.r-fig figcaption b { color: var(--ink); font-weight: 600; margin-right: 8px; }
+
+/* 연락 끝맺음: 포트폴리오 첫 장 · 디자인 쪽과 같은 .contact · .big-links(site.css) */
+.r-contact { margin-top: var(--gap-sec); }
 
 /* ── 구역 틀: 왼쪽에 제목(붙어 따라옴), 오른쪽에 내용 ── */
 .r-sec { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); row-gap: 24px; align-items: start; margin-top: var(--gap-sec); }
@@ -136,7 +147,7 @@ button.go { background: none; color: var(--ink); padding: 0; }
 /* ── 좁은 화면 ─────────────────────────────── */
 @media (max-width: 1080px) {
   .r-say, .r-toc { grid-column: 1 / -1; }
-  .r-toc { display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--gutter); }
+  .r-toc-list { display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--gutter); }
   .r-head { grid-column: 1 / -1; position: static; }
   .r-desc { max-width: 64ch; }
   .r-body { grid-column: 1 / -1; margin-top: 16px; }
@@ -145,7 +156,13 @@ button.go { background: none; color: var(--ink); padding: 0; }
   .r-hero { row-gap: 40px; }
   .r-hero h1 .r-h1-main { font-size: clamp(36px, 11vw, 48px); line-height: 1.04; }
   .r-goal { font-size: var(--t-b); }
-  .r-toc { display: none; }
+  .r-toc summary { display: list-item; line-height: 48px; padding: 0 16px; background: var(--surface-2); font-weight: 600; cursor: pointer; }
+  .r-toc summary::marker { color: var(--muted); }
+  .r-toc summary:hover { background: var(--surface); }
+  .r-toc-list { grid-template-columns: minmax(0, 1fr); padding-top: 4px; }
+  .r-toc a { padding: 12px 0; }
+  .r-line .r-fig { grid-column: 1 / -1; grid-row: 4; }
+  .r-fig-poster .plate { max-width: 70%; }
   .r-line > li { grid-template-columns: minmax(0, 1fr) auto; padding: 16px 0; }
   .r-line .r-date, .r-line .r-rel { grid-row: 1; padding-top: 0; align-self: baseline; }
   .r-line .r-date { grid-column: 1; }
