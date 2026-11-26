@@ -1,4 +1,21 @@
 // 커리어 로드맵: 폰 차례 접기 · 데일리 로그 (이 브라우저의 localStorage에만 저장한다)
+// 한국어판(/career-roadmap/)과 영어판(/career-roadmap/en/)이 같이 쓴다. 글은 <html lang>으로 고르고, 기록은 두 판이 같은 곳에 둔다.
+var RM_EN = document.documentElement.lang === 'en';
+var RM_T = RM_EN
+  ? { empty: 'No notes yet. Use the form above to note what you did today.', did: 'Did', why: 'Why', stuck: 'Stuck', next: 'Next', need: 'Write what you did today before saving.', saved: 'Saved in this browser.', fail: "Couldn't save: this browser's storage isn't available.", ask: 'Delete all notes saved in this browser?', cleared: 'All notes deleted.', menu: 'Menu', close: 'Close' }
+  : { empty: '아직 기록이 없습니다. 위 폼에 오늘 한 일을 남겨보세요.', did: '한 일', why: '이유', stuck: '막힌 점', next: '다음', need: '오늘 무엇을 했는지는 꼭 적어주세요.', saved: '이 브라우저에 저장됐습니다.', fail: '저장에 실패했습니다 (브라우저 저장소를 사용할 수 없음).', ask: '이 브라우저에 저장된 기록을 모두 지울까요?', cleared: '기록을 모두 지웠습니다.', menu: '메뉴', close: '닫기' };
+
+// 영어판: 같이 쓰는 site.js가 폰 메뉴 단추 글을 한국어로 바꾸므로, 열림 상태에 맞춰 영어로 되돌린다.
+// (포트폴리오 영어판의 site.js가 같은 일을 하게 되면 이 덩이는 지운다)
+(function(){
+  if (!RM_EN) return;
+  var btn = document.querySelector('.menu-btn'), t = btn && btn.querySelector('.t');
+  if (!t) return;
+  var fix = function(){ var want = btn.getAttribute('aria-expanded') === 'true' ? RM_T.close : RM_T.menu; if (t.textContent !== want) t.textContent = want; };
+  new MutationObserver(fix).observe(btn, { attributes: true, attributeFilter: ['aria-expanded'] });
+  new MutationObserver(fix).observe(t, { childList: true, characterData: true, subtree: true });
+  fix();
+})();
 
 // 차례: 넓은 화면에서는 늘 펼침, 폰(760px 이하)에서는 "차례" 한 줄로 접어 둔다. 스크립트가 없으면 펼친 채로 둔다.
 (function(){
@@ -46,7 +63,7 @@
   function render(entries){
     listEl.replaceChildren();
     if(!entries || !entries.length){
-      listEl.append(el('div', 'log-empty', '아직 기록이 없습니다. 위 폼에 오늘 한 일을 남겨보세요.'));
+      listEl.append(el('div', 'log-empty', RM_T.empty));
       return;
     }
     var list = el('div', 'log-list');
@@ -54,7 +71,7 @@
       var box = el('div', 'log-entry');
       box.append(el('div', 'log-date', e.date || ''));
       var dl = el('dl');
-      [['한 일', e.did], ['이유', e.why], ['막힌 점', e.blocker], ['다음', e.next]].forEach(function(row, i){
+      [[RM_T.did, e.did], [RM_T.why, e.why], [RM_T.stuck, e.blocker], [RM_T.next, e.next]].forEach(function(row, i){
         if (i > 0 && !row[1]) return;
         dl.append(el('dt', null, row[0]), el('dd', null, row[1] || ''));
       });
@@ -74,7 +91,7 @@
     ev.preventDefault();
     var did = didEl.value.trim();
     if(!did){
-      statusEl.textContent = '오늘 무엇을 했는지는 꼭 적어주세요.';
+      statusEl.textContent = RM_T.need;
       statusEl.classList.add('err');
       didEl.setAttribute('aria-invalid', 'true');
       didEl.focus();
@@ -93,17 +110,17 @@
     if(save(entries)){
       render(entries);
       formEl.reset();
-      statusEl.textContent = '이 브라우저에 저장됐습니다.';
+      statusEl.textContent = RM_T.saved;
     }else{
-      statusEl.textContent = '저장에 실패했습니다 (브라우저 저장소를 사용할 수 없음).';
+      statusEl.textContent = RM_T.fail;
       statusEl.classList.add('err');
     }
   });
 
   clearBtn.addEventListener('click', function(){
-    if(!confirm('이 브라우저에 저장된 기록을 모두 지울까요?')) return;
+    if(!confirm(RM_T.ask)) return;
     try{ localStorage.removeItem(STORAGE_KEY); }catch(e){}
     render([]);
-    statusEl.textContent = '기록을 모두 지웠습니다.';
+    statusEl.textContent = RM_T.cleared;
   });
 })();
