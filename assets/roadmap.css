@@ -24,6 +24,21 @@
 /* 연표 옆 작품 그림: 그 줄의 본문 아래, 같은 칸에 */
 .r-line .r-fig { grid-column: 2; grid-row: 3; margin-top: 16px; }
 .r-fig-poster .plate { max-width: 320px; }
+/* 영어판: 주인 말 인용 밑의 한국어 원문(작게, lang="ko") — 포트폴리오 .orig와 같은 꼴 */
+.r-line .r-orig { grid-column: 2; grid-row: 3; margin-top: 8px; font-size: var(--t-s); line-height: 1.7; color: var(--muted); max-width: 64ch; }
+.r-line li:has(.r-orig) .r-fig { grid-row: 4; }
+
+/* 수상: 교내상 · 대외수상 두 묶음, 진행표 줄(해 | 이름 · 작품 · 곳) */
+.r-awards-h { font-size: var(--t-m); line-height: 1.4; }
+.r-aw-group { margin-top: 20px; }
+.r-aw-group h4 { margin: 0; font-size: var(--t-s); font-weight: 500; color: var(--muted); }
+.r-aw li { display: grid; grid-template-columns: 9.5em minmax(0, 1fr); gap: 4px var(--gutter); padding: 10px 0; align-items: baseline; }
+.r-aw time { color: var(--faint); font-size: var(--t-s); font-variant-numeric: tabular-nums; }
+.r-aw-w b { display: block; font-weight: 600; line-height: 1.4; }
+.r-aw-w > span { display: block; margin-top: 4px; text-wrap: pretty; }
+.r-aw-meta { grid-column: 2; color: var(--muted); font-size: var(--t-s); }
+.r-aw-meta a { color: var(--ink); text-underline-offset: .22em; text-decoration-color: color-mix(in srgb, var(--ink) 40%, transparent); }
+.r-aw-meta a:hover { text-decoration-color: var(--ink); }
 .r-fig figcaption { margin-top: 12px; font-size: var(--t-s); color: var(--muted); }
 .r-fig figcaption b { color: var(--ink); font-weight: 600; margin-right: 8px; }
 
@@ -162,6 +177,10 @@ button.go { background: none; color: var(--ink); padding: 0; }
   .r-toc-list { grid-template-columns: minmax(0, 1fr); padding-top: 4px; }
   .r-toc a { padding: 12px 0; }
   .r-line .r-fig { grid-column: 1 / -1; grid-row: 4; }
+  .r-line .r-orig { grid-column: 1 / -1; grid-row: 4; }
+  .r-line li:has(.r-orig) .r-fig { grid-row: 5; }
+  .r-aw li { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+  .r-aw-meta { grid-column: 1; }
   .r-fig-poster .plate { max-width: 70%; }
   .r-line > li { grid-template-columns: minmax(0, 1fr) auto; padding: 16px 0; }
   .r-line .r-date, .r-line .r-rel { grid-row: 1; padding-top: 0; align-self: baseline; }
